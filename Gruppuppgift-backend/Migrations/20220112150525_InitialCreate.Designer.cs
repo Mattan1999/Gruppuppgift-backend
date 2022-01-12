@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gruppuppgift_backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220112132853_InitialCreate")]
+    [Migration("20220112150525_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,7 +56,7 @@ namespace Gruppuppgift_backend.Migrations
                     b.Property<string>("City")
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("DealershipName")
                         .HasColumnType("text");
 
                     b.HasKey("Id");

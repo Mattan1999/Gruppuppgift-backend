@@ -13,7 +13,7 @@ namespace Gruppuppgift_backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "text", nullable: true),
+                    DealershipName = table.Column<string>(type: "text", nullable: true),
                     City = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>

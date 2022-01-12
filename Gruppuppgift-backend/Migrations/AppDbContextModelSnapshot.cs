@@ -54,7 +54,7 @@ namespace Gruppuppgift_backend.Migrations
                     b.Property<string>("City")
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("DealershipName")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
