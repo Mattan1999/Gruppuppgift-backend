@@ -11,6 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Gruppuppgift_backend.Data;
+using Gruppuppgift_backend.Repositories;
 
 namespace Gruppuppgift_backend
 {
@@ -26,7 +29,10 @@ namespace Gruppuppgift_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AppDbContext>(opt =>
+                    opt.UseMySQL(Configuration.GetConnectionString("Default")));
 
+            services.AddScoped<ICarRepository, CarRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
