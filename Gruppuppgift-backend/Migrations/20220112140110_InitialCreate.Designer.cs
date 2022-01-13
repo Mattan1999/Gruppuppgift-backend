@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gruppuppgift_backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220112132853_InitialCreate")]
+    [Migration("20220112140110_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
