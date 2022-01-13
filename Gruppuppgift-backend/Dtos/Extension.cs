@@ -1,5 +1,7 @@
 ﻿
 
+using Gruppuppgift_backend.Entities;
+
 namespace Gruppuppgift_backend.Dtos
 {
     public static class Extension
@@ -10,7 +12,7 @@ namespace Gruppuppgift_backend.Dtos
             {
                 Id = car.Id,
                 Model = car.Model,
-                CarDealership = car.CarDealership
+                CarDealership = car.Dealership.Id
             };
         }
     }

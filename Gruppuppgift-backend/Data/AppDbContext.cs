@@ -1,3 +1,4 @@
+using Gruppuppgift_backend.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Gruppuppgift_backend.Data

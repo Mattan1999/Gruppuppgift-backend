@@ -1,4 +1,5 @@
-﻿using Gruppuppgift_backend.Repositories;
+﻿using Gruppuppgift_backend.Entities;
+using Gruppuppgift_backend.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 

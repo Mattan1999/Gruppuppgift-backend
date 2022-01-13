@@ -1,4 +1,5 @@
 ﻿using Gruppuppgift_backend.Dtos;
+using Gruppuppgift_backend.Entities;
 
 namespace Gruppuppgift_backend
 {
@@ -10,7 +11,7 @@ namespace Gruppuppgift_backend
             {
                 Id = car.Id,
                 Model = car.Model,
-                CarDealership = car.CarDealership
+                CarDealership = car.Dealership.Id
             };
         }
     }
