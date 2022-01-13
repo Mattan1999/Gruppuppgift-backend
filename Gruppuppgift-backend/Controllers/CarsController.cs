@@ -1,77 +1,80 @@
 ﻿using Gruppuppgift_backend.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Gruppuppgift_backend.Entities;
 using System.Collections.Generic;
 
 namespace Gruppuppgift_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
+
     public class CarsController : ControllerBase
     {
         private readonly ICarRepository _repository;
 
-        public CarsController(ICarRepository repo)
+        public CarsController(ICarRepository repository)
         {
-            _repository = repo;
+            _repository = repository;
         }
 
         [HttpGet]
 
         public IEnumerable<Car> GetCars()
         {
-            var cars = _repository.GetCars();
-            return cars;
+            return _repository.GetCars();
         }
 
-        // [HttpGet("{id}")]
+        [HttpGet("{id}")]
 
-        // public ActionResult<Car> GetCar(int id)
-        // {
-        //     var dog = _repository.GetCar(id);
-
-        //     if (dog == null)
-        //     {
-        //         return NotFound();
-        //     }
-        //     return Ok(dog);
-        // }
-
-        // [HttpPut("{id}")]
-        // public ActionResult UpdateDog(Car car, int id)
-        // {
-        //     // var selectedCar = _repository.GetCar(id);
-        //     var selectedCar = _repository.GetCar(id);
-        //     if (selectedCar == null)
-        //     {
-        //         return NotFound();
-        //     }
-        //     // selectedCar = car.Model;
-        //     _repository.UpdateCar(selectedCar);
-        //     return Ok();
-        // }
-
-        [HttpDelete("{id}")]
-        public ActionResult DeleteDog(int id)
+        public ActionResult<Car> GetCar(int id)
         {
-            _repository.DeleteCar(id);
+            var car = _repository.GetCar(id);
+
+            if (car == null)
+                return NotFound();
+
+            return Ok(car);
+        }
+
+        [HttpPost]
+        public ActionResult AddCar(Car c)
+        {
+
+
+            bool res = _repository.AddCar(c);
+            if (!res)
+                return BadRequest();
+            return CreatedAtAction(nameof(AddCar), c);
+        }
+        [HttpPut("{id}")]
+
+        public ActionResult UpdateCar(Car c, int id)
+        {
+            var existingCar = _repository.GetCar(id);
+
+            if (existingCar == null)
+                return NotFound();
+
+            existingCar.Price = c.Price;
+            bool res = _repository.UpdateCar(existingCar);
+            if (!res)
+                return BadRequest();
+            return Ok();
+        }
+        [HttpDelete("{id}")]
+
+        public ActionResult DeleteCar(int id)
+        {
+            var car = GetCar(id);
+            if (car == null)
+                return NotFound();
+
+            bool res = _repository.DeleteCar(id);
+
+            if (!res)
+                return BadRequest();
+
             return NoContent();
         }
-
-        // [HttpPost]
-        // public ActionResult<Car> AddCar(Car car)
-        // {
-        //     Car nCar = new Car()
-        //     {
-        //         Id = car.Id,
-        //         Model = car.Model,
-        //         Manufacturer = car.Manufacturer,
-        //         Color = car.Color,
-        //         Price = car.Price,
-        //         Dealership = car.Dealership
-        //     };
-        //     _repository.AddCar(car);
-        //     return CreatedAtAction(nameof(GetCar), new { id = car.Id }, car);
-        // }
     }
 }

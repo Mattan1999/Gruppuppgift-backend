@@ -1,53 +1,77 @@
-﻿using System.Collections.Generic;
+﻿using Gruppuppgift_backend.Data;
 using Gruppuppgift_backend.Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Gruppuppgift_backend.Repositories
 {
     public class CarRepository : ICarRepository
     {
-        private readonly List<Car> _carList = new List<Car>()
-            {
-                new Car() { Id = 1, Manufacturer = "BMW", Model = "i8", Color = "White", Price = 1000000},
-                new Car() { Id = 1, Manufacturer = "Tesla", Model = "x8", Color = "White", Price = 800000 },
-                new Car() { Id = 1, Manufacturer = "Toyota", Model = "Prius", Color = "White", Price = 60000 },
-            };
+        private readonly AppDbContext _context;
+        public CarRepository(AppDbContext context)
+        {
+            _context = context;
+        }
 
         public IEnumerable<Car> GetCars()
         {
-            return _carList;
+            return _context.Cars.Include(c => c.Price).ToList();
         }
 
-        // public Car GetCar(int id)
-        // {
-        //     var car = _carList.Where(e => e.Id == id);
-        //     return car.SingleOrDefault();
-        // }
-
-
-        // public Car GetCar(int id)
-        // {
-        //     // var car = _dogList.Where(e => e.Id == id);
-        //     var car = _dogList.FindIndex(w => w.Id == id);
-        //     return car.SingleOrDefault();
-        // }
-
-        public void UpdateCar(Car car)
+        public Car GetCar(int id)
         {
-            var index = _carList.FindIndex(e => e.Id == car.Id);
-            _carList[index] = car;
+            return _context.Cars.Include(c => c.Price).FirstOrDefault(x => x.Id == id);
 
         }
-        public void DeleteCar(int id)
+        public bool AddCar(Car c)
         {
-            Car index = _carList.Find(e => e.Id == id);
-            _carList.Remove(index);
+            try
+            {
+                _context.Cars.Add(c);
+                var res = _context.SaveChanges();
+
+                string response = "Succesfully created a Car" + res;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error when adding Car", e.Message);
+                return false;
+            }
+            return true;
         }
-        public void AddCar(Car car)
+        public bool UpdateCar(Car c)
         {
-            _carList.Add(car);
+            try
+            {
+                var Car = _context.Cars.SingleOrDefault(existingCar => existingCar.Id == c.Id);
+                _context.Entry(Car).CurrentValues.SetValues(c);
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                return false;
+                throw new Exception(e.Message);
+            }
+            return true;
         }
 
+        public bool DeleteCar(int id)
+        {
+            try
+            {
+                var Car = _context.Cars.SingleOrDefault(existingCar => existingCar.Id == id);
+                _context.Cars.Remove(Car);
+                _context.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            return true;
+        }
     }
-
-
 }
