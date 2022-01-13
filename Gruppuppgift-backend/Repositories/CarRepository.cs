@@ -17,12 +17,12 @@ namespace Gruppuppgift_backend.Repositories
 
         public IEnumerable<Car> GetCars()
         {
-            return _context.Cars.Include(c => c.Price).ToList();
+            return _context.Cars.Include(c => c.Dealership).ToList();
         }
 
         public Car GetCar(int id)
         {
-            return _context.Cars.Include(c => c.Price).FirstOrDefault(x => x.Id == id);
+            return _context.Cars.Include(c => c.Dealership).FirstOrDefault(x => x.Id == id);
 
         }
         public bool AddCar(Car c)
